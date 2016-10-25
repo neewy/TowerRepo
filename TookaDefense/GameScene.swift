@@ -13,13 +13,12 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-
 class GameScene: GameSceneInit {
 	
-	let gridRows = 10
+	let gridRows = 20
 	
-	let gridHeightModifier = 0.6
-	let gridWidthModifier = 0.85
+	let gridHeightModifier = 0.5
+	let gridWidthModifier = 0.5
 	
 	var grid = SKNode()
 	var optionGrid = SKNode()
@@ -274,7 +273,12 @@ class GameScene: GameSceneInit {
 				}
 			case is GameSceneActiveState:
 				let position = coordinateOfPoint(touchLocation)
-				if coordinateOfPoint(touchLocation)?.x < 18 && coordinateOfPoint(touchLocation)?.y < 10 {
+				if (coordinateOfPoint(touchLocation)?.x)! < 18 && (coordinateOfPoint(touchLocation)?.y)! < 10 &&
+					(coordinateOfPoint(touchLocation)?.x)! >= 0 && (coordinateOfPoint(touchLocation)?.y)! >= 0 {
+					print("================================")
+					print(Int(position!.x))
+					print(Int(position!.y))
+					print("================================")
 					if layout[Int(position!.x)][Int(position!.y)].components.count == 0 && placingTower == false{
 						placingTowerOnNode = touchedNode
 						showTowerSelector(atPosition: touchLocation)
