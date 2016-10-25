@@ -28,9 +28,11 @@ class HealthComponent: GKComponent {
 		healthBar.fillColor = UIColor.green
 		healthBar.strokeColor = UIColor.green
 		healthBar.position = CGPoint(x: parentNode.position.x, y: parentNode.position.y + 25)
+		healthBar.zPosition = 100
 		parentNode.addChild(healthBar)
 		
-		healthBar.isHidden = false
+		
+		healthBar.isHidden = true
 		super.init()
 	}
 

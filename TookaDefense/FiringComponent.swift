@@ -54,7 +54,7 @@ class FiringComponent: GKComponent {
 		projectileNode.rotateToFaceNode(targetNode, sourceNode: parentComponent.node)
 		
 		
-		let fireVector = CGVector(dx: targetNode.position.x - targetNode.position.x, dy: targetNode.position.y - parentComponent.node.position.y)
+		let fireVector = CGVector(dx: targetNode.position.x - parentComponent.node.position.x, dy: targetNode.position.y - parentComponent.node.position.y)
 		
 		let soundAction = SKAction.playSoundFileNamed("\(towerType.rawValue)Fire.mp3", waitForCompletion: false)
 		let fireAction = SKAction.move(by: fireVector, duration: 0.2)
