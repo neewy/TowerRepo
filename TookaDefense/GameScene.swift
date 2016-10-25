@@ -327,18 +327,20 @@ class GameScene: GameSceneInit {
 		for componentSystem in self.componentSystems {
 			componentSystem.addComponent(foundIn: entity)
 		}
-		var isoPos = CGPoint(x:0, y:0)
 		if let spriteNode = entity.component(
 			ofType: SpriteComponent.self)?.node {
-				isoPos = spriteNode.position
 				addNode(spriteNode, toGameLayer: .sprites)
+			//CHANGED
+				spriteNode.sprite3d!.position = point2DToIso(spriteNode.position)
+				addNode(spriteNode.sprite3d!, toGameLayer: .sprites)
 		}
 		//CHANGED
-		if let spriteISONode = entity.component(
-			ofType: SpriteComponent.self)?.ISOnode {
-			spriteISONode.position = point2DToIso(isoPos)
-			addNode(spriteISONode, toGameLayer: .sprites)
-		}
+		
+//		if let spriteISONode = entity.component(
+//			ofType: SpriteComponent.self)?.ISOnode {
+//			spriteISONode.position = point2DToIso(isoPos)
+//			addNode(spriteISONode, toGameLayer: .sprites)
+//		}
 	}
 	
 	func addEnemy(_ enemyType: EnemyType, gridposition: int2, endGridPosition: int2) {

@@ -39,12 +39,19 @@ class FiringComponent: GKComponent {
 		
 		let projectile = ProjectileEntity(towerType: towerType)
 		let projectileNode = projectile.spriteComponent.node
+		//CHANGED
+//		let projectileISONode = projectile.spriteComponent.ISOnode
+//		projectileISONode.position = point2DToIso(projectileNode.position)
+//		parentNode.addChild(projectileISONode)
 		
 		projectileNode.position = CGPoint(x: 0.0, y: 0.0)
 		parentNode.addChild(projectileNode)
 		
 		let targetNode = target.spriteComponent.node
 		projectileNode.rotateToFaceNode(targetNode, sourceNode: parentNode)
+		//CHANGED
+//		let targetISONode = target.spriteComponent.ISOnode
+//		projectileISONode.rotateToFaceNode(targetISONode, sourceNode: parentNode)
 		
 		let fireVector = CGVector(dx: targetNode.position.x - parentNode.position.x, dy: targetNode.position.y - parentNode.position.y)
 		
@@ -59,6 +66,12 @@ class FiringComponent: GKComponent {
 		
 		let action = SKAction.sequence([soundAction, fireAction, damageAction,removeAction])
 		projectileNode.run(action)
+		//CHANGED
+//		let fireVectorISO = CGVector(dx: targetNode.position.x - parentNode.position.x, dy: targetNode.position.y - parentNode.position.y)
+//		let fireISO = SKAction.move(by: fireVector, duration: 0.2)
+//		projectileISONode.run (SKAction.run { () -> Void in
+//			projectileISONode.removeFromParent()
+//		})
 	}
 }
 
