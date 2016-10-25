@@ -30,6 +30,9 @@ class GameScene: GameSceneInit {
 	var offsetX: Double!
 	var offsetY: Double!
 	
+	//Camera
+	let cameraNode = SKCameraNode()
+	
 	var waveManager: WaveManager!
 	
 	lazy var stateMachine: GKStateMachine = GKStateMachine(states:
@@ -60,6 +63,13 @@ class GameScene: GameSceneInit {
 	
 	override func didMove(to view: SKView) {
 		super.didMove(to: view)
+		
+		//Camera
+		cameraNode.zPosition = CGFloat(UInt32.max)
+		addChild(cameraNode)
+		camera = cameraNode
+		cameraNode.position.x = size.width / 2
+		cameraNode.position.y = size.height / 2
 		
 		let background = SKSpriteNode(color: UIColor(red: 0.20, green: 0.29, blue: 0.37, alpha: 1.0), size: CGSize(width: self.size.width, height: self.size.height))
 		background.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
@@ -798,6 +808,20 @@ class GameScene: GameSceneInit {
 		explosionEmitterNode!.position = position
 		explosionEmitterNode?.zPosition = 2
 		self.addChild(explosionEmitterNode!)
+	}
+	
+	
+	// Camera
+	override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+		for touch in touches {
+			let location = touch.location(in: self)
+			let previousLocation = touch.previousLocation(in: self)
+			
+			let deltaX = location.x - previousLocation.x
+			let deltaY = location.y - previousLocation.y
+			cameraNode.position.x -= deltaX
+			cameraNode.position.y -= deltaY
+		}
 	}
 }
 
