@@ -104,7 +104,7 @@ class TowerEntity: GKEntity {
 			textureSize: textureSize, animations: loadAnimations())
 		addComponent(animationComponent)
 		
-		firingComponent = FiringComponent(towerType: towerType, parentNode: spriteComponent.node)
+		firingComponent = FiringComponent(towerType: towerType, parentComponent: spriteComponent)
 		addComponent(firingComponent)
 	}
 
