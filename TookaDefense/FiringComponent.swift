@@ -59,6 +59,7 @@ class FiringComponent: GKComponent {
 		let fireAction = SKAction.move(by: fireVector, duration: 0.2)
 		let damageAction = SKAction.run { () -> Void in
 			target.healthComponent.takeDamage(self.towerType.damage)
+			target.healthComponentIso.takeDamage(self.towerType.damage)
 		}
 		let removeAction = SKAction.run { () -> Void in
 			projectileNode.removeFromParent()
