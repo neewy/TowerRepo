@@ -1,37 +1,3 @@
-//
-//  GameScene.swift
-//  TookaDefense
-//
-//  Created by Antoine Beneteau on 29/11/2015.
-//  Copyright © 2015 Tastyapp. All rights reserved.
-//
-//	******************** TookaDefense/GameUtils+Levels ********************
-//	Les classes utiles pour la scene active et les matrices pour les levels
-//
-//	******************** TookaDefense/GameUtils+LevelsParticules ********************
-//	Les particules utilisées pour le jeux sont toutes dans ce dossier
-//
-//	******************** TookaDefense/GameUtils+LevelsEntities ********************
-//	Toutes les classes des entitées du jeu (tours, ennemis, obstacles)
-//
-//	******************** TookaDefense/GameUtils+LevelsComponents ********************
-//	Tous les composants des GKEntity du jeu (visuel, animation, tirs, vie de l'ennemi)
-//
-//	******************** TookaDefense/GameUtils+LevelsScenes ********************
-//	Toutes les scenes utilisées pour le jeu
-//
-//	******************** TookaDefense/GameUtils+LevelsStates ********************
-//	Les differentes étapes du jeu sont gérés avec une "StateMachine" (menu, level, actif, fin)
-//
-//	******************** TookaDefense/GameUtils+LevelsArts ********************
-//	Les images utilisées dans le jeu
-//
-//	******************** TookaDefense/GameUtils+LevelsGameSceneHelper ********************
-//	Les variables et fonctions utilisées pour le bon fonctionnement des scenes sous forme du pré-scene
-//
-//	******************** TookaDefense/GameUtils+LevelsOverlayNodeClass ********************
-//	Les classes des "Nodes" utilisées pour les sprite et label utilisés sur les scenes
-//
 
 import SpriteKit
 import GameplayKit
@@ -361,13 +327,17 @@ class GameScene: GameSceneInit {
 		for componentSystem in self.componentSystems {
 			componentSystem.addComponent(foundIn: entity)
 		}
-		
+		var isoPos = CGPoint(x:0, y:0)
 		if let spriteNode = entity.component(
 			ofType: SpriteComponent.self)?.node {
-			//CHANGED
-				spriteNode.sprite3d?.position = point2DToIso(spriteNode.position)
-		
+				isoPos = spriteNode.position
 				addNode(spriteNode, toGameLayer: .sprites)
+		}
+		//CHANGED
+		if let spriteISONode = entity.component(
+			ofType: SpriteComponent.self)?.ISOnode {
+			spriteISONode.position = point2DToIso(isoPos)
+			addNode(spriteISONode, toGameLayer: .sprites)
 		}
 	}
 	

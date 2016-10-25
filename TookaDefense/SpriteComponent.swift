@@ -12,7 +12,7 @@ import GameplayKit
 class EntityNode: SKSpriteNode {
 	weak var entite: GKEntity!
 	
-	var sprite3d: SKSpriteNode?
+//	var sprite3d: SKSpriteNode?
 //		{
 //		get{return sprite3d}
 //		set(sprite){sprite3d = sprite}
@@ -22,11 +22,18 @@ class EntityNode: SKSpriteNode {
 class SpriteComponent: GKComponent {
 	
 	let node: EntityNode
+	let ISOnode: EntityNode
 	
 	init(entity: GKEntity, texture: SKTexture, size: CGSize, name: String) {
 		node = EntityNode(texture: texture, color: SKColor.white, size: size)
 		node.name = name
 		node.entite = entity
+//		make transparent
+//		node.alpha = 0
+		
+		ISOnode = EntityNode(texture: texture, color: SKColor.white, size: size)
+		ISOnode.name = name
+		ISOnode.entite = entity
 		
 		if name == "Slow" || name == "Boost" || name == "Teleport" || name == "Repair" {
 			node.alpha = 0.7
