@@ -193,6 +193,7 @@ class GameScene: GameSceneInit {
 				}
 				waveLabel.text = "\(waveManager.currentWave)/\(waveManager.waves.count)"
 				enemy.spriteComponent.node.removeFromParent()
+				enemy.spriteComponent.node.sprite3d?.removeFromParent()
 				entities.remove(enemy)
 			}
 			else if enemy.spriteComponent.node.position.x >= enemy.endPoint.x - 1 {
@@ -203,6 +204,7 @@ class GameScene: GameSceneInit {
 					stateMachine.enter(GameSceneLoseState.self)
 				}
 				enemy.spriteComponent.node.removeFromParent()
+				enemy.spriteComponent.node.sprite3d?.removeFromParent()
 				entities.remove(enemy)
 			}
 		}
@@ -382,6 +384,9 @@ class GameScene: GameSceneInit {
 				
 				let towerEntity = TowerEntity(towerType: towerType, size: CGSize(width: boxSize, height: boxSize))
 				towerEntity.spriteComponent.node.position = position
+				
+				//Change?
+				
 				layout[Int(coordinate.x)][Int(coordinate.y)] = towerEntity
 				
 				graph.remove([node])
@@ -685,19 +690,29 @@ class GameScene: GameSceneInit {
 		path.remove(at: 0)
 
 		var sequence = [SKAction]()
+		var sequenceIso = [SKAction]()
 		
 		for node in path {
 			let location = pointForGridPosition(node.gridPosition)
+			let locationIso = point2DToIso(location) //Changed
 //			let location = point2DToIso(pointForGridPosition(node.gridPosition))
 			let update = SKAction.run({ [unowned self] in
-				enemyNode.position = self.pointForGridPosition(node.gridPosition)
+				enemyNode.position = location //self.pointForGridPosition(node.gridPosition)
 				})
+			//Changed
+			let updateIso = SKAction.run({enemyNode.sprite3d?.position = locationIso})
+			
 			let actionDuration = TimeInterval(200.0 / enemy.enemyType.speed)
 			let action = SKAction.move(to: location, duration: actionDuration)
 			
+			//Changed
+			let actionIso = SKAction.move(to: locationIso, duration: actionDuration)
+			
 			sequence += [action,update]
+			sequenceIso += [actionIso, updateIso]
 		}
 		enemyNode.run(SKAction.sequence(sequence))
+		enemyNode.sprite3d?.run(SKAction.sequence(sequenceIso))
 	}
 	
 	func recalculateEnemyPaths() {
