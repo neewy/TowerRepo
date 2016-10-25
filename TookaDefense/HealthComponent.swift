@@ -30,7 +30,7 @@ class HealthComponent: GKComponent {
 		healthBar.position = CGPoint(x: parentNode.position.x, y: parentNode.position.y + 25)
 		parentNode.addChild(healthBar)
 		
-		healthBar.isHidden = true
+		healthBar.isHidden = false
 		super.init()
 	}
 

@@ -99,6 +99,9 @@ class EnemyEntity: GKEntity {
 	var spriteComponent: SpriteComponent!
 	var animationComponent: AnimationComponent!
 	var healthComponent: HealthComponent!
+	
+	var healthComponentIso: HealthComponent!
+	
 	var endPoint: CGPoint
 	var slowed: Bool = false
 	var boosted: Bool = false
@@ -118,6 +121,9 @@ class EnemyEntity: GKEntity {
 		
 		healthComponent = HealthComponent(parentNode: spriteComponent.node ,barWidth: 100, health: enemyType.health)
 		addComponent(healthComponent)
+		
+		healthComponentIso = HealthComponent(parentNode: spriteComponent.node.sprite3d! ,barWidth: 100, health: enemyType.health)
+		addComponent(healthComponentIso)
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -137,6 +143,9 @@ class EnemyEntity: GKEntity {
 	func enemyTeleported(_ toPoint: CGPoint) {
 		teleported = true
 		spriteComponent.node.position = toPoint
+		
+		//Changed
+		spriteComponent.node.sprite3d?.position = point2DToIso(toPoint)
 	}
 }
 
