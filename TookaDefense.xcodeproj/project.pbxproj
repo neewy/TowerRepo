@@ -97,6 +97,7 @@
 		00F9D8901C020E6D00FDC148 /* Enemy1.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 00F9D88F1C020E6D00FDC148 /* Enemy1.atlas */; };
 		00F9D8921C020E7700FDC148 /* WaterTower.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 00F9D8911C020E7700FDC148 /* WaterTower.atlas */; };
 		00F9D8941C02790400FDC148 /* BackgroundLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00F9D8931C02790400FDC148 /* BackgroundLogo@2x.png */; };
+		171306981DC128090033D7BF /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171306971DC128090033D7BF /* GameScene.swift */; };
 		2C30124A1DC11E3800E0A2AF /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2C3012491DC11E3800E0A2AF /* .gitignore */; };
 		8A708AD91DC071FA00363D7A /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A708AD81DC071FA00363D7A /* Global.swift */; };
 		DAC31A1D1BD6C19300EEC069 /* SpriteComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC31A1C1BD6C19300EEC069 /* SpriteComponent.swift */; };
@@ -107,7 +108,6 @@
 		DAC31A2A1BD6C7FE00EEC069 /* ProjectileEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC31A291BD6C7FE00EEC069 /* ProjectileEntity.swift */; };
 		DAEAE8FB1BB68B79000ACA2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEAE8FA1BB68B79000ACA2E /* AppDelegate.swift */; };
 		DAEAE8FD1BB68B79000ACA2E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DAEAE8FC1BB68B79000ACA2E /* GameScene.sks */; };
-		DAEAE8FF1BB68B79000ACA2E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEAE8FE1BB68B79000ACA2E /* GameScene.swift */; };
 		DAEAE9011BB68B79000ACA2E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEAE9001BB68B79000ACA2E /* GameViewController.swift */; };
 		DAEAE9041BB68B79000ACA2E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAEAE9021BB68B79000ACA2E /* Main.storyboard */; };
 		DAEAE9061BB68B79000ACA2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAEAE9051BB68B79000ACA2E /* Assets.xcassets */; };
@@ -212,6 +212,7 @@
 		00F9D88F1C020E6D00FDC148 /* Enemy1.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Enemy1.atlas; sourceTree = "<group>"; };
 		00F9D8911C020E7700FDC148 /* WaterTower.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = WaterTower.atlas; sourceTree = "<group>"; };
 		00F9D8931C02790400FDC148 /* BackgroundLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackgroundLogo@2x.png"; sourceTree = "<group>"; };
+		171306971DC128090033D7BF /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		2C3012491DC11E3800E0A2AF /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		8A708AD81DC071FA00363D7A /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		DAC31A1C1BD6C19300EEC069 /* SpriteComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteComponent.swift; sourceTree = "<group>"; };
@@ -223,7 +224,6 @@
 		DAEAE8F71BB68B79000ACA2E /* TookaDefense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TookaDefense.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAEAE8FA1BB68B79000ACA2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAEAE8FC1BB68B79000ACA2E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		DAEAE8FE1BB68B79000ACA2E /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		DAEAE9001BB68B79000ACA2E /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		DAEAE9031BB68B79000ACA2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DAEAE9051BB68B79000ACA2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -478,8 +478,8 @@
 		DAEAE8F91BB68B79000ACA2E /* TookaDefense */ = {
 			isa = PBXGroup;
 			children = (
+				171306971DC128090033D7BF /* GameScene.swift */,
 				8A708AD81DC071FA00363D7A /* Global.swift */,
-				DAEAE8FE1BB68B79000ACA2E /* GameScene.swift */,
 				002D9BF91C1F82FC0028A101 /* GameUtils+Levels */,
 				00D9656F1C178AF500753938 /* Particules */,
 				DAC31A1E1BD6C2AF00EEC069 /* Entities */,
@@ -693,12 +693,12 @@
 				002D9BE91C1F7EE70028A101 /* WinNode.swift in Sources */,
 				DAEAE98D1BB68EBC000ACA2E /* GameSceneInit.swift in Sources */,
 				002D9BE71C1F7ED60028A101 /* LevelSelectorNode.swift in Sources */,
+				171306981DC128090033D7BF /* GameScene.swift in Sources */,
 				DAC31A241BD6C54100EEC069 /* AnimationComponent.swift in Sources */,
 				00B2AA3C1C0728C300A1C56A /* TowerMenu.swift in Sources */,
 				002D9BDF1C1F7BAF0028A101 /* Screens.swift in Sources */,
 				DAC31A261BD6C6E400EEC069 /* TowerEntity.swift in Sources */,
 				DAC31A281BD6C7D000EEC069 /* FiringComponent.swift in Sources */,
-				DAEAE8FF1BB68B79000ACA2E /* GameScene.swift in Sources */,
 				002D9BDD1C1F7AA50028A101 /* Hud.swift in Sources */,
 				DAC31A1D1BD6C19300EEC069 /* SpriteComponent.swift in Sources */,
 				DAEAE9011BB68B79000ACA2E /* GameViewController.swift in Sources */,
