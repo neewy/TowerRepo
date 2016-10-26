@@ -1,9 +1,6 @@
 import SpriteKit
 import GameplayKit
 
-
-
-
 class GameScene: GameSceneInit {
 	
 	let gridRows = 20
