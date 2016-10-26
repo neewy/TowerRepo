@@ -185,9 +185,7 @@ class GameScene: GameSceneInit {
 					}
 				}
 				waveLabel.text = "\(waveManager.currentWave)/\(waveManager.waves.count)"
-				enemy.spriteComponent.node.removeFromParent()
-				enemy.spriteComponent.node.sprite3d?.removeFromParent()
-				entities.remove(enemy)
+				remove(enemy)
 			}
 			else if enemy.spriteComponent.node.position.x >= enemy.endPoint.x - 1 {
 				baseLives -= enemy.enemyType.baseDamage
@@ -196,9 +194,7 @@ class GameScene: GameSceneInit {
 				if baseLives <= 0 {
 					stateMachine.enter(GameSceneLoseState.self)
 				}
-				enemy.spriteComponent.node.removeFromParent()
-				enemy.spriteComponent.node.sprite3d?.removeFromParent()
-				entities.remove(enemy)
+				remove(enemy)
 			}
 		}
 	}
@@ -757,6 +753,17 @@ class GameScene: GameSceneInit {
 				let line = SKShapeNode(path: dashed)
 				line.strokeColor = UIColor.black
 				pathLine.addChild(line)
+				
+				//CHANGED
+				let bezierPath3d = UIBezierPath()
+				let startPoint3d = point2DToIso((CGPoint(x: position.x, y: position.y)))
+				let endPoint3d = point2DToIso(CGPoint(x: nextPosition.x, y: nextPosition.y))
+				bezierPath3d.move(to: startPoint3d)
+				bezierPath3d.addLine(to: endPoint3d)
+				let dashed3d = CGPath(__byDashing: bezierPath3d.cgPath, transform: nil, phase: 0, lengths: pattern, count: 2)!
+				let line3d = SKShapeNode(path: dashed3d)
+				line3d.strokeColor = UIColor.black
+				pathLine.addChild(line3d)
 			}
 			index += 1
 		}
@@ -797,6 +804,8 @@ class GameScene: GameSceneInit {
 	
 	func remove(_ entity: GKEntity) {
 		if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node {
+			spriteNode.sprite3d?.removeFromParent()
+			spriteNode.sprite3d = nil
 			spriteNode.removeFromParent()
 		}
 		entities.remove(entity)
