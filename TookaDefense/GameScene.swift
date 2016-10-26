@@ -268,7 +268,7 @@ class GameScene: GameSceneInit {
 				}
 			case is GameSceneActiveState:
 				let position = coordinateOfPoint(touchLocation)
-				if (coordinateOfPoint(touchLocation)?.x)! < 20 && (coordinateOfPoint(touchLocation)?.y)! < 20 &&
+				if (coordinateOfPoint(touchLocation)?.x)! < Int32(LEVEL_SIZE.column) && (coordinateOfPoint(touchLocation)?.y)! < Int32(LEVEL_SIZE.row) &&
 					(coordinateOfPoint(touchLocation)?.x)! >= 0 && (coordinateOfPoint(touchLocation)?.y)! >= 0 {
 					print("================================")
 					print(Int(position!.x))
