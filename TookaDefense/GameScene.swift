@@ -17,6 +17,9 @@ class GameScene: GameSceneInit {
 	//Camera
 	let cameraNode = SKCameraNode()
 	
+	//IsoView
+	let isoView = SKNode()
+	
 	var waveManager: WaveManager!
 	
 	lazy var stateMachine: GKStateMachine = GKStateMachine(states:
@@ -50,6 +53,9 @@ class GameScene: GameSceneInit {
 
 		// No physics 
 		physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+		
+		//Isoview settings
+		self.addChild(isoView)
 
 		// Camera Settings
 		cameraNode.zPosition = CGFloat(UInt32.max)
@@ -331,7 +337,8 @@ class GameScene: GameSceneInit {
 				addNode(spriteNode, toGameLayer: .sprites)
 			//CHANGED
 				spriteNode.sprite3d!.position = point2DToIso(spriteNode.position)
-				addNode(spriteNode.sprite3d!, toGameLayer: .sprites)
+				//addNode(spriteNode.sprite3d!, toGameLayer: .sprites)
+				isoView.addChild(spriteNode.sprite3d!)
 		}
 		//CHANGED
 		
