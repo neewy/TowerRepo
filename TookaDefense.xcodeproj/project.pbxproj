@@ -97,6 +97,7 @@
 		00F9D8901C020E6D00FDC148 /* Enemy1.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 00F9D88F1C020E6D00FDC148 /* Enemy1.atlas */; };
 		00F9D8921C020E7700FDC148 /* WaterTower.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 00F9D8911C020E7700FDC148 /* WaterTower.atlas */; };
 		00F9D8941C02790400FDC148 /* BackgroundLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00F9D8931C02790400FDC148 /* BackgroundLogo@2x.png */; };
+		2C30124A1DC11E3800E0A2AF /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2C3012491DC11E3800E0A2AF /* .gitignore */; };
 		8A708AD91DC071FA00363D7A /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A708AD81DC071FA00363D7A /* Global.swift */; };
 		DAC31A1D1BD6C19300EEC069 /* SpriteComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC31A1C1BD6C19300EEC069 /* SpriteComponent.swift */; };
 		DAC31A201BD6C2D400EEC069 /* EnemyEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC31A1F1BD6C2D400EEC069 /* EnemyEntity.swift */; };
@@ -211,6 +212,7 @@
 		00F9D88F1C020E6D00FDC148 /* Enemy1.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Enemy1.atlas; sourceTree = "<group>"; };
 		00F9D8911C020E7700FDC148 /* WaterTower.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = WaterTower.atlas; sourceTree = "<group>"; };
 		00F9D8931C02790400FDC148 /* BackgroundLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackgroundLogo@2x.png"; sourceTree = "<group>"; };
+		2C3012491DC11E3800E0A2AF /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		8A708AD81DC071FA00363D7A /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		DAC31A1C1BD6C19300EEC069 /* SpriteComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteComponent.swift; sourceTree = "<group>"; };
 		DAC31A1F1BD6C2D400EEC069 /* EnemyEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyEntity.swift; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 		DAEAE8EE1BB68B79000ACA2E = {
 			isa = PBXGroup;
 			children = (
+				2C3012491DC11E3800E0A2AF /* .gitignore */,
 				DAEAE8F91BB68B79000ACA2E /* TookaDefense */,
 				DAEAE8F81BB68B79000ACA2E /* Products */,
 			);
@@ -610,6 +613,7 @@
 				00AB59791C1370FB0078EBE5 /* Wall@2x.png in Resources */,
 				007F397F1C1CAE0B003A1A66 /* Level12Box@2x.png in Resources */,
 				007A15EC1C11142A001D0C8E /* SellButton@2x.png in Resources */,
+				2C30124A1DC11E3800E0A2AF /* .gitignore in Resources */,
 				0076D64B1C1C6C2F00DA1EDA /* score@2x.png in Resources */,
 				00394FD31C028CE900594615 /* NO ADS@2x.png in Resources */,
 				DAEAE9871BB68E66000ACA2E /* MenuScene.sks in Resources */,

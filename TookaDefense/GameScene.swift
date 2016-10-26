@@ -17,6 +17,9 @@ class GameScene: GameSceneInit {
 	//Camera
 	let cameraNode = SKCameraNode()
 	
+	//IsoView
+	let isoView = SKNode()
+	
 	var waveManager: WaveManager!
 	
 	lazy var stateMachine: GKStateMachine = GKStateMachine(states:
@@ -48,8 +51,17 @@ class GameScene: GameSceneInit {
 	override func didMove(to view: SKView) {
 		super.didMove(to: view)
 
+		let deviceScale = self.size.width/667
+		
 		// No physics 
 		physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+		
+		//Isoview settings
+		isoView.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+		//isoView.xScale = deviceScale
+		//isoView.yScale = deviceScale
+		isoView.zPosition = 1
+		self.addChild(isoView)
 
 		// Camera Settings
 		cameraNode.zPosition = CGFloat(UInt32.max)
@@ -194,8 +206,8 @@ class GameScene: GameSceneInit {
 	
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		for touch in (touches ) {
-			let touchLocation = touch.location(in: self)
-			let touchedNode = self.atPoint(touchLocation)
+			var touchLocation = touch.location(in: self)
+			var touchedNode = self.atPoint(touchLocation)
 			
 			switch stateMachine.currentState {
 			case is GameSceneReadyState:
@@ -255,9 +267,13 @@ class GameScene: GameSceneInit {
 					break
 				}
 			case is GameSceneActiveState:
-				let position = coordinateOfPoint(touchLocation)
-				if (coordinateOfPoint(touchLocation)?.x)! < Int32(LEVEL_SIZE.column) && (coordinateOfPoint(touchLocation)?.y)! < Int32(LEVEL_SIZE.row) &&
-					(coordinateOfPoint(touchLocation)?.x)! >= 0 && (coordinateOfPoint(touchLocation)?.y)! >= 0 {
+				let touchLocation = touch.location(in: self.isoView)
+				let touchedNode = self.isoView.atPoint(touchLocation)
+				
+				let touchLocation2d = pointIsoTo2D(touchLocation)
+				let position = coordinateOfPoint(touchLocation2d)
+				if (position?.x)! < Int32(LEVEL_SIZE.column) && (position?.y)! < Int32(LEVEL_SIZE.row) &&
+					(position?.x)! >= 0 && (position?.y)! >= 0 {
 					print("================================")
 					print(Int(position!.x))
 					print(Int(position!.y))
@@ -269,7 +285,7 @@ class GameScene: GameSceneInit {
 						return
 					}
 					else if placingTower {
-						if let touchedNode = self.atPoint(touchLocation).name {
+						if let touchedNode = self.isoView.atPoint(touchLocation).name {
 							placeTower(selectorPosition, touchedNode: touchedNode)
 							hideTowerSelector()
 							return
@@ -331,7 +347,8 @@ class GameScene: GameSceneInit {
 				addNode(spriteNode, toGameLayer: .sprites)
 			//CHANGED
 				spriteNode.sprite3d!.position = point2DToIso(spriteNode.position)
-				addNode(spriteNode.sprite3d!, toGameLayer: .sprites)
+				//addNode(spriteNode.sprite3d!, toGameLayer: .sprites)
+				isoView.addChild(spriteNode.sprite3d!)
 		}
 		//CHANGED
 		
@@ -585,15 +602,16 @@ class GameScene: GameSceneInit {
 		selectedBox.alpha = 0.0
 		let animation1 = SKAction.fadeAlpha(to: 0.5, duration: 0.5)
 		selectedBox.position = pointForGridPosition(gridPosition!)
+//		selectedBox.position = position
 		selectedBox.size = CGSize(width: GRID_SIZE, height: GRID_SIZE)
-		self.addChild(selectedBox)
+		isoView.addChild(selectedBox)
 		selectedBox.run(animation1)
 		
 		
 		for towerSelectorNode in towerSelectorNodes {
 			
 			towerSelectorNode.position = pointForGridPosition(gridPosition!)
-			gameLayerNodes[.hud]!.addChild(towerSelectorNode)
+			isoView.addChild(towerSelectorNode)
 			
 			towerSelectorNode.show()
 		}
@@ -658,7 +676,9 @@ class GameScene: GameSceneInit {
 	func initializeGrid() {
 		graph = GKGridGraph(fromGridStartingAt: int2(0, 0), width: Int32(LEVEL_SIZE.column), height: Int32(LEVEL_SIZE.row), diagonalsAllowed: false)
 		pathLine = SKNode()
+		pathLine3d = SKNode()
 		self.addChild(pathLine)
+		isoView.addChild(pathLine3d)
 	}
 	
 	func setEnemyOnPath(_ enemy: EnemyEntity, toPoint point: CGPoint)
@@ -723,6 +743,7 @@ class GameScene: GameSceneInit {
 	
 	func updateVisualPath() {
 		pathLine.removeAllChildren()
+		pathLine3d.removeAllChildren()
 		
 		let escapePath = self.path
 		
@@ -754,7 +775,7 @@ class GameScene: GameSceneInit {
 				let dashed3d = CGPath(__byDashing: bezierPath3d.cgPath, transform: nil, phase: 0, lengths: pattern, count: 2)!
 				let line3d = SKShapeNode(path: dashed3d)
 				line3d.strokeColor = UIColor.black
-				pathLine.addChild(line3d)
+				pathLine3d.addChild(line3d)
 			}
 			index += 1
 		}

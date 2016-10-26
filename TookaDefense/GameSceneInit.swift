@@ -14,6 +14,7 @@ import AVFoundation
 class GameSceneInit: SKScene {
 	var graph: GKGridGraph<GKGridGraphNode>!
 	var pathLine: SKNode!
+	var pathLine3d: SKNode!
 	var path: [GKGridGraphNode]!
 	
 	var selectedBox: SKSpriteNode!
