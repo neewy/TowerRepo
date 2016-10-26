@@ -1,12 +1,7 @@
 import SpriteKit
 import GameplayKit
 
-
-
-
 class GameScene: GameSceneInit {
-	
-	let gridRows = 20
 	
 	
 	let gridHeightModifier = 0.5
@@ -16,8 +11,6 @@ class GameScene: GameSceneInit {
 	var optionGrid = SKNode()
 	var hudGrid = SKNode()
 	var layout = [[GKEntity]]()
-	var boxSize: Double!
-	var gridColumns: Int!
 	var offsetX: Double!
 	var offsetY: Double!
 	
@@ -353,7 +346,7 @@ class GameScene: GameSceneInit {
 		let startPosition = pointForGridPosition(gridposition)
 		let endPosition = pointForGridPosition(endGridPosition)
 		
-		let enemy = EnemyEntity(enemyType: enemyType, size: CGSize(width: boxSize, height: boxSize), endPoint: endPosition)
+		let enemy = EnemyEntity(enemyType: enemyType, size: CGSize(width: GRID_SIZE, height: GRID_SIZE), endPoint: endPosition)
 		let enemyNode = enemy.spriteComponent.node
 		
 		enemyNode.position = startPosition
@@ -376,7 +369,7 @@ class GameScene: GameSceneInit {
 				let position = pointForGridPosition(gridPosition)
 				let coordinate = gridPosition
 				
-				let towerEntity = TowerEntity(towerType: towerType, size: CGSize(width: boxSize, height: boxSize))
+				let towerEntity = TowerEntity(towerType: towerType, size: CGSize(width: GRID_SIZE, height: GRID_SIZE))
 				towerEntity.spriteComponent.node.position = position
 				
 				//Change?
@@ -397,7 +390,7 @@ class GameScene: GameSceneInit {
 			let position = pointForGridPosition(gridPosition)
 			let coordinate = gridPosition
 			
-			let obstacleEntity = ObstacleEntity(obstacleType: obstacleType, size: CGSize(width: boxSize * 0.9, height: boxSize * 0.9))
+			let obstacleEntity = ObstacleEntity(obstacleType: obstacleType, size: CGSize(width: GRID_SIZE * 0.9, height: GRID_SIZE * 0.9))
 			obstacleEntity.spriteComponent.node.position = position
 			layout[Int(coordinate.x)][Int(coordinate.y)] = obstacleEntity
 			
@@ -419,23 +412,23 @@ class GameScene: GameSceneInit {
 		let x: Int32
 		let y: Int32
 		
-		x = Int32(arc4random() % UInt32(gridColumns - 4))
-		y = Int32(arc4random() % UInt32(gridRows - 1))
+		x = Int32(arc4random() % UInt32(LEVEL_SIZE.column - 4))
+		y = Int32(arc4random() % UInt32(LEVEL_SIZE.row - 1))
 		
 		return int2(x,y)
 	}
 	
 	func coordinateOfPoint(_ location: CGPoint) -> int2? {
-		let col = Int32(ceil((Double(location.x) - offsetX) / boxSize)) - 1
-		let row = Int32(ceil((Double(location.y) - offsetY) / boxSize)) - 1
+		let col = Int32(ceil((Double(location.x) - offsetX) / GRID_SIZE)) - 1
+		let row = Int32(ceil((Double(location.y) - offsetY) / GRID_SIZE)) - 1
 		
 		return int2(col, row) // use range operator here to make it better
 	}
 	
 	// returns CGPoint at center of grid coordinate
 	func pointForGridPosition(_ gridPosition: int2) -> CGPoint {
-		let x = Double(gridPosition.x) * boxSize + offsetX + (boxSize / 2)
-		let y = Double(gridPosition.y) * boxSize + offsetY + (boxSize / 2)
+		let x = Double(gridPosition.x) * GRID_SIZE + offsetX + (GRID_SIZE / 2)
+		let y = Double(gridPosition.y) * GRID_SIZE + offsetY + (GRID_SIZE / 2)
 		return CGPoint(x: x, y: y)
 	}
 	
@@ -454,19 +447,17 @@ class GameScene: GameSceneInit {
 		let usableHeight = Double(size.height) * gridHeightModifier
 		let usableWidth = Double(size.width) * gridWidthModifier
 		
-		boxSize = usableHeight / Double(gridRows)
-		gridColumns = Int(usableWidth / boxSize)
-		offsetX = (Double(size.width) - boxSize * Double(gridColumns)) / 4.0
-		offsetY = (Double(size.height) - boxSize * Double(gridRows)) / 2.5
+		offsetX = (Double(size.width) - GRID_SIZE * Double(LEVEL_SIZE.column)) / 4.0
+		offsetY = (Double(size.height) - GRID_SIZE * Double(LEVEL_SIZE.row)) / 2.5
 		
-		for col in 0 ..< gridColumns {
-			let xPos = boxSize * Double(col)
-			layout.append(Array(repeating: GKEntity(), count: gridRows))
+		for col in 0 ..< LEVEL_SIZE.column {
+			let xPos = GRID_SIZE * Double(col)
+			layout.append(Array(repeating: GKEntity(), count: LEVEL_SIZE.row))
 			
-			for row in 0 ..< gridRows {
-				let yPos = boxSize * Double(row)
+			for row in 0 ..< LEVEL_SIZE.row {
+				let yPos = GRID_SIZE * Double(row)
 				
-				let path = UIBezierPath(rect: CGRect(x: xPos + offsetX, y: yPos + offsetY, width: boxSize, height: boxSize))
+				let path = UIBezierPath(rect: CGRect(x: xPos + offsetX, y: yPos + offsetY, width: GRID_SIZE, height: GRID_SIZE))
 				let box = SKShapeNode()
 				box.path = path.cgPath
 				box.strokeColor = UIColor.gray
@@ -482,20 +473,20 @@ class GameScene: GameSceneInit {
 	func createOptionGrid() {
 		optionGrid = SKNode()
 		
-		for row in 0 ..< gridRows / 2 {
-			let yPos = boxSize * 2.0 * Double(row) + offsetY
-			let path = UIBezierPath(rect: CGRect(x: boxSize * Double(gridColumns) + offsetX * 1.3, y: yPos, width: boxSize * 2.0, height: boxSize * 2.0))
+		for row in 0 ..< LEVEL_SIZE.row / 2 {
+			let yPos = GRID_SIZE * 2.0 * Double(row) + offsetY
+			let path = UIBezierPath(rect: CGRect(x: GRID_SIZE * Double(LEVEL_SIZE.column) + offsetX * 1.3, y: yPos, width: GRID_SIZE * 2.0, height: GRID_SIZE * 2.0))
 			let box = SKShapeNode()
 			box.path = path.cgPath
 			box.strokeColor = UIColor.gray
 			box.alpha = 1.0
 			box.lineWidth = 2.0
 			
-			pauseButton.position = hudConvertPlacement(0, hud: "Option", boxWidthAndHeight: CGSize(width: boxSize * 2.0, height: boxSize * 2.0))
-			leaveButton.position = hudConvertPlacement(1, hud: "Option", boxWidthAndHeight: CGSize(width: boxSize * 2.0, height: boxSize * 2.0))
-			sellButton.position = hudConvertPlacement(2, hud: "Option", boxWidthAndHeight: CGSize(width: boxSize * 2.0, height: boxSize * 2.0))
-			buyButton.position = hudConvertPlacement(3, hud: "Option", boxWidthAndHeight: CGSize(width: boxSize * 2.0, height: boxSize * 2.0))
-			recordButton.position = hudConvertPlacement(4, hud: "Option", boxWidthAndHeight: CGSize(width: boxSize * 2.0, height: boxSize * 2.0))
+			pauseButton.position = hudConvertPlacement(0, hud: "Option", boxWidthAndHeight: CGSize(width: GRID_SIZE * 2.0, height: GRID_SIZE * 2.0))
+			leaveButton.position = hudConvertPlacement(1, hud: "Option", boxWidthAndHeight: CGSize(width: GRID_SIZE * 2.0, height: GRID_SIZE * 2.0))
+			sellButton.position = hudConvertPlacement(2, hud: "Option", boxWidthAndHeight: CGSize(width: GRID_SIZE * 2.0, height: GRID_SIZE * 2.0))
+			buyButton.position = hudConvertPlacement(3, hud: "Option", boxWidthAndHeight: CGSize(width: GRID_SIZE * 2.0, height: GRID_SIZE * 2.0))
+			recordButton.position = hudConvertPlacement(4, hud: "Option", boxWidthAndHeight: CGSize(width: GRID_SIZE * 2.0, height: GRID_SIZE * 2.0))
 			
 			optionGrid.addChild(box)
 		}
@@ -505,9 +496,9 @@ class GameScene: GameSceneInit {
 	func createHUDGrid() {
 		hudGrid = SKNode()
 		
-		for row in 0 ..< gridColumns / 6 {
-			let yPos = boxSize * Double(gridRows) + offsetY + offsetX * 0.3
-			let path = UIBezierPath(rect: CGRect(x: boxSize * 6.0 * Double(row) + offsetX, y: yPos, width: boxSize * 6.0, height: boxSize))
+		for row in 0 ..< LEVEL_SIZE.column / 6 {
+			let yPos = GRID_SIZE * Double(LEVEL_SIZE.row) + offsetY + offsetX * 0.3
+			let path = UIBezierPath(rect: CGRect(x: GRID_SIZE * 6.0 * Double(row) + offsetX, y: yPos, width: GRID_SIZE * 6.0, height: GRID_SIZE))
 			let box = SKShapeNode()
 			box.path = path.cgPath
 			box.strokeColor = UIColor.gray
@@ -517,10 +508,10 @@ class GameScene: GameSceneInit {
 			hudGrid.addChild(box)
 		}
 		
-		goldLabel.position = hudConvertPlacement(0, hud: "Stats", boxWidthAndHeight: CGSize(width: boxSize * 6.0, height: boxSize))
-		baseLabel.position = hudConvertPlacement(1, hud: "Stats", boxWidthAndHeight: CGSize(width: boxSize * 6.0, height: boxSize))
-		waveLabel.position = hudConvertPlacement(2, hud: "Stats", boxWidthAndHeight: CGSize(width: boxSize * 6.0, height: boxSize))
-		diamondLabel.position = hudConvertPlacement(3, hud: "Stats", boxWidthAndHeight: CGSize(width: boxSize * 5.5, height: boxSize))
+		goldLabel.position = hudConvertPlacement(0, hud: "Stats", boxWidthAndHeight: CGSize(width: GRID_SIZE * 6.0, height: GRID_SIZE))
+		baseLabel.position = hudConvertPlacement(1, hud: "Stats", boxWidthAndHeight: CGSize(width: GRID_SIZE * 6.0, height: GRID_SIZE))
+		waveLabel.position = hudConvertPlacement(2, hud: "Stats", boxWidthAndHeight: CGSize(width: GRID_SIZE * 6.0, height: GRID_SIZE))
+		diamondLabel.position = hudConvertPlacement(3, hud: "Stats", boxWidthAndHeight: CGSize(width: GRID_SIZE * 5.5, height: GRID_SIZE))
 		self.addChild(hudGrid)
 	}
 	
@@ -536,10 +527,10 @@ class GameScene: GameSceneInit {
 		
 		if hud == "Stats" {
 			x = b! + Double(gridPosition + (gridPosition + 1)) * Double(boxW)
-			y = a! + boxSize * Double(gridRows) + lOffset + Double(boxH)
+			y = a! + GRID_SIZE * Double(LEVEL_SIZE.row) + lOffset + Double(boxH)
 			return CGPoint(x: x, y: y)
 		} else if hud == "Option" {
-			x = b! * 1.3 + boxSize * Double(gridColumns) + Double(boxW)
+			x = b! * 1.3 + GRID_SIZE * Double(LEVEL_SIZE.column) + Double(boxW)
 			y = a! + Double(gridPosition + (gridPosition + 1)) * Double(boxH)
 			return CGPoint(x: x, y: y)
 		}
@@ -547,8 +538,8 @@ class GameScene: GameSceneInit {
 	}
 	
 	func addHudStuff() {
-		let optionStuffSize = CGSize(width: boxSize * 1.5, height: boxSize * 1.5)
-		let statStuffSize = CGSize(width: boxSize / 2, height: boxSize / 2)
+		let optionStuffSize = CGSize(width: GRID_SIZE * 1.5, height: GRID_SIZE * 1.5)
+		let statStuffSize = CGSize(width: GRID_SIZE / 2, height: GRID_SIZE / 2)
 		
 		pauseButton.size = optionStuffSize
 		pauseButton.name = "PauseButton"
@@ -568,19 +559,19 @@ class GameScene: GameSceneInit {
 		
 		baseLabel.run(SKAction.fadeAlpha(to: 1.0, duration: 0.5))
 		baseLabelImage.size = statStuffSize
-		baseLabelImage.position = CGPoint(x: baseLabel.position.x - CGFloat(boxSize * 2.0), y: baseLabel.position.y)
+		baseLabelImage.position = CGPoint(x: baseLabel.position.x - CGFloat(GRID_SIZE * 2.0), y: baseLabel.position.y)
 		self.addChild(baseLabelImage)
 		goldLabel.run(SKAction.fadeAlpha(to: 1.0, duration: 0.5))
 		goldLabelImage.size = statStuffSize
-		goldLabelImage.position = CGPoint(x: goldLabel.position.x - CGFloat(boxSize * 2.0), y: goldLabel.position.y)
+		goldLabelImage.position = CGPoint(x: goldLabel.position.x - CGFloat(GRID_SIZE * 2.0), y: goldLabel.position.y)
 		self.addChild(goldLabelImage)
 		waveLabel.run(SKAction.fadeAlpha(to: 1.0, duration: 0.5))
 		waveLabelImage.size = statStuffSize
-		waveLabelImage.position = CGPoint(x: waveLabel.position.x - CGFloat(boxSize * 2.0), y: waveLabel.position.y)
+		waveLabelImage.position = CGPoint(x: waveLabel.position.x - CGFloat(GRID_SIZE * 2.0), y: waveLabel.position.y)
 		self.addChild(waveLabelImage)
 		diamondLabel.run(SKAction.fadeAlpha(to: 1.0, duration: 0.5))
 		diamondLabelImage.size = statStuffSize
-		diamondLabelImage.position = CGPoint(x: diamondLabel.position.x - CGFloat(boxSize / 1.15), y: diamondLabel.position.y)
+		diamondLabelImage.position = CGPoint(x: diamondLabel.position.x - CGFloat(GRID_SIZE / 1.15), y: diamondLabel.position.y)
 		self.addChild(diamondLabelImage)
 		
 	}
@@ -594,7 +585,7 @@ class GameScene: GameSceneInit {
 		selectedBox.alpha = 0.0
 		let animation1 = SKAction.fadeAlpha(to: 0.5, duration: 0.5)
 		selectedBox.position = pointForGridPosition(gridPosition!)
-		selectedBox.size = CGSize(width: boxSize, height: boxSize)
+		selectedBox.size = CGSize(width: GRID_SIZE, height: GRID_SIZE)
 		self.addChild(selectedBox)
 		selectedBox.run(animation1)
 		
@@ -648,7 +639,7 @@ class GameScene: GameSceneInit {
 	}
 	
 	func numToPointForSelection(_ number: Int) ->CGPoint {
-		let x = CGFloat(boxSize * 1.4)
+		let x = CGFloat(GRID_SIZE * 1.4)
 		switch number {
 		case 0:
 			return CGPoint(x: x, y: 0)
@@ -665,7 +656,7 @@ class GameScene: GameSceneInit {
 	}
 	
 	func initializeGrid() {
-		graph = GKGridGraph(fromGridStartingAt: int2(0, 0), width: Int32(gridColumns), height: Int32(gridRows), diagonalsAllowed: false)
+		graph = GKGridGraph(fromGridStartingAt: int2(0, 0), width: Int32(LEVEL_SIZE.column), height: Int32(LEVEL_SIZE.row), diagonalsAllowed: false)
 		pathLine = SKNode()
 		self.addChild(pathLine)
 	}
@@ -747,7 +738,7 @@ class GameScene: GameSceneInit {
 				bezierPath.move(to: startPoint)
 				bezierPath.addLine(to: endPoint)
 				
-				let pattern: [CGFloat] = [CGFloat(boxSize / 10), CGFloat(boxSize / 10)]
+				let pattern: [CGFloat] = [CGFloat(GRID_SIZE / 10), CGFloat(GRID_SIZE / 10)]
 				let dashed = CGPath(__byDashing: bezierPath.cgPath, transform: nil, phase: 0, lengths: pattern, count: 2)!
 				
 				let line = SKShapeNode(path: dashed)
@@ -820,7 +811,7 @@ class GameScene: GameSceneInit {
 		
 		let coinEarnedImage = SKSpriteNode(imageNamed: "GoldImage")
 		coinEarnedImage.position = (explosionEmitterNode?.position)!
-		coinEarnedImage.size = CGSize(width: boxSize / 2, height: boxSize / 2)
+		coinEarnedImage.size = CGSize(width: GRID_SIZE / 2, height: GRID_SIZE / 2)
 		coinEarnedImage.zPosition = 2
 		addChild(coinEarnedImage)
 		coinEarnedImage.run(SKAction.move(to: goldLabelImage.position, duration: 1.0))
