@@ -21,7 +21,7 @@ class GameSceneActiveState: GameSceneState {
 		scene.initializeGrid()
 		scene.createHUDGrid()
 		scene.addHudStuff()
-		scene.loadLevelMap(levelToLoad)
+		scene.loadLevel(levelToLoad)
 		
 		scene.loadTowerSelectorNodes()
 		

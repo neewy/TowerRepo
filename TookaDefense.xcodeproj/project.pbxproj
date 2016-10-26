@@ -97,6 +97,7 @@
 		00F9D8901C020E6D00FDC148 /* Enemy1.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 00F9D88F1C020E6D00FDC148 /* Enemy1.atlas */; };
 		00F9D8921C020E7700FDC148 /* WaterTower.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 00F9D8911C020E7700FDC148 /* WaterTower.atlas */; };
 		00F9D8941C02790400FDC148 /* BackgroundLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00F9D8931C02790400FDC148 /* BackgroundLogo@2x.png */; };
+		8A708AD91DC071FA00363D7A /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A708AD81DC071FA00363D7A /* Global.swift */; };
 		DAC31A1D1BD6C19300EEC069 /* SpriteComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC31A1C1BD6C19300EEC069 /* SpriteComponent.swift */; };
 		DAC31A201BD6C2D400EEC069 /* EnemyEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC31A1F1BD6C2D400EEC069 /* EnemyEntity.swift */; };
 		DAC31A241BD6C54100EEC069 /* AnimationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC31A231BD6C54100EEC069 /* AnimationComponent.swift */; };
@@ -210,6 +211,7 @@
 		00F9D88F1C020E6D00FDC148 /* Enemy1.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Enemy1.atlas; sourceTree = "<group>"; };
 		00F9D8911C020E7700FDC148 /* WaterTower.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = WaterTower.atlas; sourceTree = "<group>"; };
 		00F9D8931C02790400FDC148 /* BackgroundLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackgroundLogo@2x.png"; sourceTree = "<group>"; };
+		8A708AD81DC071FA00363D7A /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		DAC31A1C1BD6C19300EEC069 /* SpriteComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteComponent.swift; sourceTree = "<group>"; };
 		DAC31A1F1BD6C2D400EEC069 /* EnemyEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyEntity.swift; sourceTree = "<group>"; };
 		DAC31A231BD6C54100EEC069 /* AnimationComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationComponent.swift; sourceTree = "<group>"; };
@@ -473,6 +475,7 @@
 		DAEAE8F91BB68B79000ACA2E /* TookaDefense */ = {
 			isa = PBXGroup;
 			children = (
+				8A708AD81DC071FA00363D7A /* Global.swift */,
 				DAEAE8FE1BB68B79000ACA2E /* GameScene.swift */,
 				002D9BF91C1F82FC0028A101 /* GameUtils+Levels */,
 				00D9656F1C178AF500753938 /* Particules */,
@@ -698,6 +701,7 @@
 				DAEAE9911BB6A05E000ACA2E /* MathsUtils.swift in Sources */,
 				00AB596B1C132F950078EBE5 /* HealthComponent.swift in Sources */,
 				DAC31A2A1BD6C7FE00EEC069 /* ProjectileEntity.swift in Sources */,
+				8A708AD91DC071FA00363D7A /* Global.swift in Sources */,
 				DAC31A201BD6C2D400EEC069 /* EnemyEntity.swift in Sources */,
 				002D9BE51C1F7EC90028A101 /* MenuNode.swift in Sources */,
 				002D9BD21C1F765C0028A101 /* MenuStateClass.swift in Sources */,

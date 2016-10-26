@@ -1,8 +1,3 @@
-//
-//  Waves.swift
-//  TookaDefense
-//
-
 import Foundation
 
 struct Wave {
@@ -19,7 +14,7 @@ class WaveManager {
 	let waves: [Wave]
 	
 	let newWaveHandler: (_ waveNum: Int) -> Void
-	let newEnemyHandler: (_ mobType: EnemyType) -> Void // importe une fonction pour ajouter un ennemi de tel type
+	let newEnemyHandler: (_ mobType: EnemyType) -> Void 
 	
 	init(waves: [Wave], newWaveHandler: @escaping (_ waveNum: Int) -> Void, newEnemyHandler: @escaping (_ enemyType: EnemyType) -> Void) {
 		self.waves = waves
