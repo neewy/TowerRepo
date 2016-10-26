@@ -206,8 +206,8 @@ class GameScene: GameSceneInit {
 	
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		for touch in (touches ) {
-			let touchLocation = touch.location(in: self)
-			let touchedNode = self.atPoint(touchLocation)
+			var touchLocation = touch.location(in: self)
+			var touchedNode = self.atPoint(touchLocation)
 			
 			switch stateMachine.currentState {
 			case is GameSceneReadyState:
@@ -267,9 +267,13 @@ class GameScene: GameSceneInit {
 					break
 				}
 			case is GameSceneActiveState:
-				let position = coordinateOfPoint(touchLocation)
-				if (coordinateOfPoint(touchLocation)?.x)! < Int32(LEVEL_SIZE.column) && (coordinateOfPoint(touchLocation)?.y)! < Int32(LEVEL_SIZE.row) &&
-					(coordinateOfPoint(touchLocation)?.x)! >= 0 && (coordinateOfPoint(touchLocation)?.y)! >= 0 {
+				let touchLocation = touch.location(in: self.isoView)
+				let touchedNode = self.isoView.atPoint(touchLocation)
+				
+				let touchLocation2d = pointIsoTo2D(touchLocation)
+				let position = coordinateOfPoint(touchLocation2d)
+				if (position?.x)! < Int32(LEVEL_SIZE.column) && (position?.y)! < Int32(LEVEL_SIZE.row) &&
+					(position?.x)! >= 0 && (position?.y)! >= 0 {
 					print("================================")
 					print(Int(position!.x))
 					print(Int(position!.y))
@@ -281,7 +285,7 @@ class GameScene: GameSceneInit {
 						return
 					}
 					else if placingTower {
-						if let touchedNode = self.atPoint(touchLocation).name {
+						if let touchedNode = self.isoView.atPoint(touchLocation).name {
 							placeTower(selectorPosition, touchedNode: touchedNode)
 							hideTowerSelector()
 							return
@@ -598,15 +602,16 @@ class GameScene: GameSceneInit {
 		selectedBox.alpha = 0.0
 		let animation1 = SKAction.fadeAlpha(to: 0.5, duration: 0.5)
 		selectedBox.position = pointForGridPosition(gridPosition!)
+//		selectedBox.position = position
 		selectedBox.size = CGSize(width: GRID_SIZE, height: GRID_SIZE)
-		self.addChild(selectedBox)
+		isoView.addChild(selectedBox)
 		selectedBox.run(animation1)
 		
 		
 		for towerSelectorNode in towerSelectorNodes {
 			
 			towerSelectorNode.position = pointForGridPosition(gridPosition!)
-			gameLayerNodes[.hud]!.addChild(towerSelectorNode)
+			isoView.addChild(towerSelectorNode)
 			
 			towerSelectorNode.show()
 		}
