@@ -276,7 +276,6 @@ class GameScene: GameSceneInit {
 					print(Int(position!.x))
 					print(Int(position!.y))
 					print("================================")
-					let comp = layout[Int(position!.x)][Int(position!.y)].components.count
 					if layout[Int(position!.x)][Int(position!.y)].components.count == 0 && !placingTower {
 						placingTowerOnNode = touchedNode
 						showTowerSelector(atPosition: touchLocation)
@@ -284,7 +283,6 @@ class GameScene: GameSceneInit {
 						return
 					}
 					else if placingTower {
-						let touchedNode = self.atPoint(touchLocation).name
 						if let touchedNode = self.atPoint(touchLocation).name {
 							placeTower(selectorPosition, touchedNode: touchedNode)
 							hideTowerSelector()
