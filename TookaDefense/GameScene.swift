@@ -262,15 +262,14 @@ class GameScene: GameSceneInit {
 					break
 				}
 			case is GameSceneActiveState:
-				let touchLocation2D = pointIsoTo2D(touchLocation) //Changed
-				let position = coordinateOfPoint(touchLocation2D)
-				if (position?.x)! < 18 && (position?.y)! < 10 &&
-					(position?.x)! >= 0 && (position?.y)! >= 0 {
+				let position = coordinateOfPoint(touchLocation)
+				if (coordinateOfPoint(touchLocation)?.x)! < 20 && (coordinateOfPoint(touchLocation)?.y)! < 20 &&
+					(coordinateOfPoint(touchLocation)?.x)! >= 0 && (coordinateOfPoint(touchLocation)?.y)! >= 0 {
 					print("================================")
 					print(Int(position!.x))
 					print(Int(position!.y))
 					print("================================")
-					if layout[Int(position!.x)][Int(position!.y)].components.count == 0 && !placingTower {
+					if layout[Int(position!.x)][Int(position!.y)].components.count == 0 && placingTower == false{
 						placingTowerOnNode = touchedNode
 						showTowerSelector(atPosition: touchLocation)
 						selectorPosition = position!
@@ -587,7 +586,7 @@ class GameScene: GameSceneInit {
 	}
 	
 	func showTowerSelector(atPosition position: CGPoint) {
-		if placingTower {return}
+		if placingTower == true {return}
 		placingTower = true
 		
 		let gridPosition = coordinateOfPoint(position)
@@ -603,14 +602,14 @@ class GameScene: GameSceneInit {
 		for towerSelectorNode in towerSelectorNodes {
 			
 			towerSelectorNode.position = pointForGridPosition(gridPosition!)
-//			gameLayerNodes[.hud]!.addChild(towerSelectorNode)
-			addNode(towerSelectorNode, toGameLayer: GameLayer.background)
+			gameLayerNodes[.hud]!.addChild(towerSelectorNode)
+			
 			towerSelectorNode.show()
 		}
 	}
 	
 	func hideTowerSelector() {
-		if !placingTower { return }
+		if placingTower == false { return }
 		placingTower = false
 		
 		let animation1 = SKAction.fadeAlpha(to: 0.0, duration: 1.0)
