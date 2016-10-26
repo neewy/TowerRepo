@@ -51,10 +51,16 @@ class GameScene: GameSceneInit {
 	override func didMove(to view: SKView) {
 		super.didMove(to: view)
 
+		let deviceScale = self.size.width/667
+		
 		// No physics 
 		physicsWorld.gravity = CGVector(dx: 0, dy: 0)
 		
 		//Isoview settings
+		isoView.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+		//isoView.xScale = deviceScale
+		//isoView.yScale = deviceScale
+		isoView.zPosition = 1
 		self.addChild(isoView)
 
 		// Camera Settings
