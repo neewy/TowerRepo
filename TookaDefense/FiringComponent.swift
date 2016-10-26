@@ -31,7 +31,8 @@ class FiringComponent: GKComponent {
 		super.update(deltaTime: seconds)
 		
 		guard let target = currentTarget else { return }
-		
+		//CHANGED
+		guard let targetISONode = target.spriteComponent.node.sprite3d else {return}
 		
 		timeTillNextShot -= seconds
 		if timeTillNextShot > 0 { return }
@@ -39,6 +40,7 @@ class FiringComponent: GKComponent {
 		
 		let projectile = ProjectileEntity(towerType: towerType)
 		let projectileNode = projectile.spriteComponent.node
+		
 		
 		//CHANGED
 //		let projectileISONode = projectile.spriteComponent.ISOnode
@@ -74,11 +76,11 @@ class FiringComponent: GKComponent {
 		parentComponent.node.sprite3d?.addChild(projectileIsoNode!)
 		
 		//CHANGED
-		let targetISONode = targetNode.sprite3d
-		projectileIsoNode?.rotateToFaceNode(targetISONode!, sourceNode: parentComponent.node.sprite3d!)
+//		let targetISONode = targetNode.sprite3d
+		projectileIsoNode?.rotateToFaceNode(targetISONode, sourceNode: parentComponent.node.sprite3d!)
 		
 		//CHANGED
-		let fireVectorIso = CGVector(dx: (targetISONode?.position.x)! - (parentComponent.node.sprite3d?.position.x)!, dy: (targetISONode?.position.y)! - (parentComponent.node.sprite3d?.position.y)!)
+		let fireVectorIso = CGVector(dx: (targetISONode.position.x) - (parentComponent.node.sprite3d?.position.x)!, dy: (targetISONode.position.y) - (parentComponent.node.sprite3d?.position.y)!)
 		
 		let fireActionIso = SKAction.move(by: fireVectorIso, duration: 0.2)
 		let damageActionIso = SKAction.run{ () -> Void in

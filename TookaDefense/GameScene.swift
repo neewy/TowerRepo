@@ -1,21 +1,13 @@
-
 import SpriteKit
 import GameplayKit
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
+
+
 
 
 class GameScene: GameSceneInit {
 	
 	let gridRows = 20
+	
 	
 	let gridHeightModifier = 0.5
 	let gridWidthModifier = 0.5
@@ -62,19 +54,21 @@ class GameScene: GameSceneInit {
 	
 	override func didMove(to view: SKView) {
 		super.didMove(to: view)
-		
-		//Camera
+
+		// No physics 
+		physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+
+		// Camera Settings
 		cameraNode.zPosition = CGFloat(UInt32.max)
 		addChild(cameraNode)
 		camera = cameraNode
 		cameraNode.position.x = size.width / 2
 		cameraNode.position.y = size.height / 2
 		
-		let background = SKSpriteNode(color: UIColor(red: 0.20, green: 0.29, blue: 0.37, alpha: 1.0), size: CGSize(width: self.size.width, height: self.size.height))
+		// Add background
+		let background = SKSpriteNode(color: UIColor(red: 0.20, green: 0.29, blue: 0.37, alpha: 1.0), size: CGSize(width: self.size.width*5, height: self.size.height*5))
 		background.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
 		addChild(background)
-		
-		physicsWorld.gravity = CGVector(dx: 0, dy: 0)
 		
 		stateMachine.enter(GameSceneReadyState.self)
 		
@@ -84,7 +78,7 @@ class GameScene: GameSceneInit {
 		]
 		waveManager = WaveManager(waves: waves,
 			newWaveHandler: { (waveNum) -> Void in self.run(SKAction.playSoundFileNamed("NewWave.mp3", waitForCompletion: false))},
-			newEnemyHandler: { (enemyType) -> Void in self.addEnemy(enemyType, gridposition: int2(0,5), endGridPosition: int2(17,5))}
+			newEnemyHandler: { (enemyType) -> Void in self.addEnemy(enemyType, gridposition: int2(0,15), endGridPosition: int2(19,15))}
 		)
 		waveLabel.text = "\(waveManager.currentWave)/\(waveManager.waves.count)"
 	}
@@ -687,6 +681,12 @@ class GameScene: GameSceneInit {
 		
 		let currentNode = graph.node(atGridPosition: coordinateOfPoint(enemyNode.position)!)
 		let endNode = graph.node(atGridPosition: coordinateOfPoint(enemy.endPoint)!)
+		print ("=======================")
+
+		print(currentNode)
+		print(endNode)
+		print ("=======================")
+		
 		path = graph.findPath(from: currentNode!, to: endNode!) as! [GKGridGraphNode]
 		path.remove(at: 0)
 
@@ -740,7 +740,7 @@ class GameScene: GameSceneInit {
 		for node in escapePath! {
 			let position = pointForGridPosition(node.gridPosition)
 			
-			if index + 1 < escapePath?.count {
+			if index + 1 < (escapePath?.count)! {
 				let nextPosition = pointForGridPosition((escapePath?[index + 1].gridPosition)!)
 				let bezierPath = UIBezierPath()
 				let startPoint = CGPoint(x: position.x, y: position.y)
@@ -782,20 +782,21 @@ class GameScene: GameSceneInit {
 		}
 	}
 	
-	func loadLevelMap(_ level: Int) {
-		for i in 0..<10 {
-			for j in 0..<18 {
-				if levels[level - 1][9 - i][j] == 1 {
+	func loadLevel(_ level: Int) {
+		let levelNumber = level - 1
+		for i in 0..<LEVEL_SIZE.row {
+			for j in 0..<LEVEL_SIZE.column {
+				if levels[levelNumber][19 - i][j] == 1 {
 					addObstacle(.Wall, gridPosition: int2(Int32(j),Int32(i)))
-				} else if levels[level - 1][9 - i][j] == 2 {
+				} else if levels[levelNumber][19 - i][j] == 2 {
 					addObstacle(.Slow, gridPosition: int2(Int32(j),Int32(i)))
-				} else if levels[level - 1][9 - i][j] == 3 {
+				} else if levels[levelNumber][19 - i][j] == 3 {
 					addObstacle(.Boost, gridPosition: int2(Int32(j),Int32(i)))
-				} else if levels[level - 1][9 - i][j] == 4 {
+				} else if levels[levelNumber][19 - i][j] == 4 {
 					addObstacle(.Repair, gridPosition: int2(Int32(j),Int32(i)))
-				} else if levels[level - 1][9 - i][j] == 5 {
+				} else if levels[levelNumber][19 - i][j] == 5 {
 					addObstacle(.Diamond, gridPosition: int2(Int32(j),Int32(i)))
-				} else if levels[level - 1][9 - i][j] == 6 {
+				} else if levels[levelNumber][19 - i][j] == 6 {
 					addObstacle(.Teleport, gridPosition: int2(Int32(j),Int32(i)))
 				}
 			}
