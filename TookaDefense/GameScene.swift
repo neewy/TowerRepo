@@ -1,16 +1,7 @@
 import SpriteKit
 import GameplayKit
 
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
+
 
 
 class GameScene: GameSceneInit {
@@ -87,7 +78,7 @@ class GameScene: GameSceneInit {
 		]
 		waveManager = WaveManager(waves: waves,
 			newWaveHandler: { (waveNum) -> Void in self.run(SKAction.playSoundFileNamed("NewWave.mp3", waitForCompletion: false))},
-			newEnemyHandler: { (enemyType) -> Void in self.addEnemy(enemyType, gridposition: int2(0,5), endGridPosition: int2(19,5))}
+			newEnemyHandler: { (enemyType) -> Void in self.addEnemy(enemyType, gridposition: int2(0,15), endGridPosition: int2(19,15))}
 		)
 		waveLabel.text = "\(waveManager.currentWave)/\(waveManager.waves.count)"
 	}
@@ -693,6 +684,12 @@ class GameScene: GameSceneInit {
 		
 		let currentNode = graph.node(atGridPosition: coordinateOfPoint(enemyNode.position)!)
 		let endNode = graph.node(atGridPosition: coordinateOfPoint(enemy.endPoint)!)
+		print ("=======================")
+
+		print(currentNode)
+		print(endNode)
+		print ("=======================")
+		
 		path = graph.findPath(from: currentNode!, to: endNode!) as! [GKGridGraphNode]
 		path.remove(at: 0)
 
@@ -746,7 +743,7 @@ class GameScene: GameSceneInit {
 		for node in escapePath! {
 			let position = pointForGridPosition(node.gridPosition)
 			
-			if index + 1 < escapePath?.count {
+			if index + 1 < (escapePath?.count)! {
 				let nextPosition = pointForGridPosition((escapePath?[index + 1].gridPosition)!)
 				let bezierPath = UIBezierPath()
 				let startPoint = CGPoint(x: position.x, y: position.y)
@@ -778,19 +775,20 @@ class GameScene: GameSceneInit {
 	}
 	
 	func loadLevel(_ level: Int) {
-		for i in 0..<LEVEL_SIZE.height {
-			for j in 0..<LEVEL_SIZE.width {
-				if levels[level - 1][19 - i][j] == 1 {
+		let levelNumber = level - 1
+		for i in 0..<LEVEL_SIZE.row {
+			for j in 0..<LEVEL_SIZE.column {
+				if levels[levelNumber][19 - i][j] == 1 {
 					addObstacle(.Wall, gridPosition: int2(Int32(j),Int32(i)))
-				} else if levels[level - 1][19 - i][j] == 2 {
+				} else if levels[levelNumber][19 - i][j] == 2 {
 					addObstacle(.Slow, gridPosition: int2(Int32(j),Int32(i)))
-				} else if levels[level - 1][19 - i][j] == 3 {
+				} else if levels[levelNumber][19 - i][j] == 3 {
 					addObstacle(.Boost, gridPosition: int2(Int32(j),Int32(i)))
-				} else if levels[level - 1][19 - i][j] == 4 {
+				} else if levels[levelNumber][19 - i][j] == 4 {
 					addObstacle(.Repair, gridPosition: int2(Int32(j),Int32(i)))
-				} else if levels[level - 1][19 - i][j] == 5 {
+				} else if levels[levelNumber][19 - i][j] == 5 {
 					addObstacle(.Diamond, gridPosition: int2(Int32(j),Int32(i)))
-				} else if levels[level - 1][19 - i][j] == 6 {
+				} else if levels[levelNumber][19 - i][j] == 6 {
 					addObstacle(.Teleport, gridPosition: int2(Int32(j),Int32(i)))
 				}
 			}
