@@ -676,7 +676,9 @@ class GameScene: GameSceneInit {
 	func initializeGrid() {
 		graph = GKGridGraph(fromGridStartingAt: int2(0, 0), width: Int32(LEVEL_SIZE.column), height: Int32(LEVEL_SIZE.row), diagonalsAllowed: false)
 		pathLine = SKNode()
+		pathLine3d = SKNode()
 		self.addChild(pathLine)
+		isoView.addChild(pathLine3d)
 	}
 	
 	func setEnemyOnPath(_ enemy: EnemyEntity, toPoint point: CGPoint)
@@ -741,6 +743,7 @@ class GameScene: GameSceneInit {
 	
 	func updateVisualPath() {
 		pathLine.removeAllChildren()
+		pathLine3d.removeAllChildren()
 		
 		let escapePath = self.path
 		
@@ -772,7 +775,7 @@ class GameScene: GameSceneInit {
 				let dashed3d = CGPath(__byDashing: bezierPath3d.cgPath, transform: nil, phase: 0, lengths: pattern, count: 2)!
 				let line3d = SKShapeNode(path: dashed3d)
 				line3d.strokeColor = UIColor.black
-				pathLine.addChild(line3d)
+				pathLine3d.addChild(line3d)
 			}
 			index += 1
 		}
